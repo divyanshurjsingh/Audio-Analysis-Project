@@ -17,11 +17,11 @@ st.title("Audio Analysis")
 
 upload= st.file_uploader("select an audio file")
 btnclicked= st.button("Start Processing")
-state = SessionState.get(name='')
+state = SessionState.get(name='')            # initially the name variable we kept empty
 if btnclicked and upload:
     
     data=upload.read()
-    name=upload.name
+    name=upload.name                        # here we assinged our empty name variable to name of the file uploaded.
     ext=os.path.splitext(name)[1]  # this will split the name of the file for eg if the file name is abc.mp3 then it will split it as 
                                    # ['abc', 'mp3'] and by opting [1] we will get extension of the file.
     if ext in ['.mp3','.mp4','.ogg','.wav']:
@@ -29,13 +29,14 @@ if btnclicked and upload:
                                                       # When writing in binary mode, Python makes no changes to data as it is written to the file
             f.write(data)
             st.success("file uploaded")
-            state.name = name
+            state.name = name              # we are keeping the value of our name variable inside state.name    
     else:
         st.error("only audio files are accepted")
 else:
     st .warning("please upload a file to begin")
 
-name = state.name
+name = state.name         # again we are loading name variable with the content of state.name. This prevent us from 
+                          # uploading the audio files again and again.           
 st.write(name)
 choice=st.selectbox('choose',('waveform','spectrogram','spectrum','MFCC'))
 if choice=='waveform' and name:
