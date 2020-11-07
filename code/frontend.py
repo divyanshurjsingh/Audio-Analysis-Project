@@ -17,14 +17,14 @@ st.title("Audio Analysis")
 
 upload= st.file_uploader("select an audio file")
 btnclicked= st.button("Start Processing")
-state = SessionState.get(name='')            # initially the name variable we kept empty
+state = SessionState.get(name='')            # initially the name variable we keep empty
 if btnclicked and upload:
     
     data=upload.read()
     name=upload.name                        # here we assinged our empty name variable to name of the file uploaded.
     ext=os.path.splitext(name)[1]  # this will split the name of the file for eg if the file name is abc.mp3 then it will split it as 
                                    # ['abc', 'mp3'] and by opting [1] we will get extension of the file.
-    if ext in ['.mp3','.mp4','.ogg','.wav']:
+    if ext in ['.mp3','.mp4','.ogg','.wav','.WAV']:
         with open(f'uploads/{name}','wb') as f:       # The wb indicates that the file is opened for writing in binary mode. 
                                                       # When writing in binary mode, Python makes no changes to data as it is written to the file
             f.write(data)
