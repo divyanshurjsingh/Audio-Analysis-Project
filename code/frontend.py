@@ -11,7 +11,7 @@ import analyser as m
 import SessionState
 engine=create_engine('sqlite:///audio_database.sqlite3') 
 Session=sessionmaker(bind=engine) # this line serves only one purpose i.e connect to database.
-
+sess=Session()
 
 st.title("Audio Analysis")
 
@@ -28,8 +28,12 @@ if btnclicked and upload:
         with open(f'uploads/{name}','wb') as f:       # The wb indicates that the file is opened for writing in binary mode. 
                                                       # When writing in binary mode, Python makes no changes to data as it is written to the file
             f.write(data)
-            st.success("file uploaded")
             state.name = name              # we are keeping the value of our name variable inside state.name    
+        entry=AudioFile(file_name=name, file_path=f'uploads/{name}', file_extension=os.path.splitext(name)[1])
+        sess.add(entry)
+        sess.commit()
+
+        st.success("file uploaded")
     else:
         st.error("only audio files are accepted")
 else:
